@@ -12,7 +12,6 @@
 </template>
 
 <script setup>
-
 import Children from "../components/Children.vue";
 import Todolist from "../components/Todolist.vue";
 

@@ -1,5 +1,6 @@
 <template>
   <ChageColor />
+  <Animation />
 
   <h1>你的评分是 {{ score }}</h1>
   <!-- theme 不使用 : 的原因 -->
@@ -13,6 +14,7 @@
 import { ref } from "vue";
 import Rate from "../components/Rate.vue";
 import ChageColor from "../components/ChageColor.vue";
+import Animation from "../components/Animation.vue";
 let score = ref(3.5);
 
 function update(num) {

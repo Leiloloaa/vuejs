@@ -1,5 +1,6 @@
 <template>
   <h1>about</h1>
+  <AddVuex></AddVuex>
   <!-- 具名插槽 -->
   <Children
     ><template v-slot:header>我是头部</template
@@ -14,6 +15,7 @@
 <script setup>
 import Children from "../components/Children.vue";
 import Todolist from "../components/Todolist.vue";
+import AddVuex from "../components/AddVuex.vue";
 
 import { useMouse } from "../utils/mouse";
 

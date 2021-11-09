@@ -1,5 +1,5 @@
 // import { createStore } from 'vuex';
-import { createStore } from 'vuex';
+import { createStore } from './mini-vuex';
 
 // 数据流都试不允许直接修改的
 // 需要提交一个 mutations 修改 state 中的数据
@@ -17,7 +17,6 @@ export default createStore({
     mutations: {
         add(state) {
             state.count = state.count + 1;
-            console.log(state.count);
         }
     },
     // actions 是实现异步处理

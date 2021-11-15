@@ -141,3 +141,56 @@ class Router {
 export { createRouter, createWebHashHistory, useRouter };
 ```
 
+## JSX 和 Template
+
+**JSX**
+
+JSX 可以支持更动态的需求。而 template 则因为语法限制原因，不能够像 JSX 那样可以支持更动态的需求。这是 JSX 相比于 template 的一个优势。
+
+JSX 相比于 template 还有一个优势，是可以在一个文件内返回多个组件，我们可以像下面的代码一样，在一个文件内返回 Button、Input、Timeline 等多个组件。
+
+```jsx
+export const Button = (props,{slots})=><button {...props}>slots.default()</button>
+export const Input = (props)=><input {...props} />
+export const Timeline = (props)=>{
+  ...
+}
+```
+
+**Template**
+
+template 的语法是固定的，我们按照这种固定格式的语法书写，这样 Vue 在编译层面就可以很方便地去做静态标记的优化。
+
+在 template 解析的结果中，有以下几个性能优化的方面：
+
+- 首先，静态的标签和属性会放在 _hoisted 变量中，并且放在 render 函数之外。这样，重复执行 render 的时候，代码里的 h1 这个纯静态的标签，就不需要进行额外地计算，并且静态标签在虚拟 DOM 计算的时候，会直接越过 Diff 过程。
+- 然后是 @click 函数增加了一个 cache 缓存层，这样实现出来的效果也是和静态提升类似，尽可能高效地利用缓存。
+- 最后是，由于在下面代码中的属性里，那些带冒号的属性是动态属性，因而存在使用一个数字去标记标签的动态情况。
+- 比如在 p 标签上，使用 8 这个数字标记当前标签时，只有 props 是动态的。而在虚拟 DOM 计算 Diff 的过程中，可以忽略掉 class 和文本的计算，这也是 Vue 3 的虚拟 DOM 能够比 Vue 2 快的一个重要原因。
+
+```js
+
+import { toDisplayString as _toDisplayString, createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+const _hoisted_1 = { id: "app" }
+const _hoisted_2 = /*#__PURE__*/_createElementVNode("h1", null, "技术摸鱼", -1 /* HOISTED */)
+const _hoisted_3 = ["id"]
+
+export function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (_openBlock(), _createElementBlock("div", _hoisted_1, [
+    _createElementVNode("div", {
+      onClick: _cache[0] || (_cache[0] = ()=>_ctx.console.log(_ctx.xx)),
+      name: "hello"
+    }, _toDisplayString(_ctx.name), 1 /* TEXT */),
+    _hoisted_2,
+    _createElementVNode("p", {
+      id: _ctx.name,
+      class: "app"
+    }, "极客时间", 8 /* PROPS */, _hoisted_3)
+  ]))
+}
+
+// Check the console for the AST
+```
+
+我们实现业务需求的时候，也是优先使用 template，动态性要求较高的组件使用 JSX 实现

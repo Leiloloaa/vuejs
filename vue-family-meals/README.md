@@ -3,9 +3,13 @@
 ## init Vue Project
 
 ```js
+// 使用 vite 安装
 npm init @vitejs/app
-
 npm install vue-router@next vuex@next
+
+// 使用脚手架
+npm install -g @vue/cli
+npm create myProject
 ```
 
 ## 组件化

@@ -48,6 +48,10 @@
 
 <script setup></script>
 <style>
+* {
+  padding: 0;
+  margin: 0;
+}
 .el-header,
 .el-footer {
   background-color: #b3c0d1;
@@ -67,5 +71,10 @@
 
 body > .el-container {
   margin-bottom: 40px;
+}
+
+#nprogress .bar {
+  background: #1890ff !important;
+  height: 5px !important;
 }
 </style>

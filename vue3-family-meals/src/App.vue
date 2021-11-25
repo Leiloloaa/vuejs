@@ -1,5 +1,6 @@
 <template>
-  <el-container>
+  {{ age }} <button @click="test">按钮</button>
+  <!-- <el-container>
     <el-header>
       <el-menu
         :default-active="1"
@@ -43,10 +44,14 @@
         </el-main>
       </el-container>
     </el-container>
-  </el-container>
+  </el-container> -->
 </template>
 
-<script setup></script>
+<script setup>
+import { useFoo } from "./hooks/useFoo";
+
+const { message: age, test } = useFoo();
+</script>
 <style>
 * {
   padding: 0;
